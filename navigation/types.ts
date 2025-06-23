@@ -1,18 +1,19 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-export type RootStackParamList = {
-  Tabs: {
-    screen?: keyof TabParamList;
-  };
-  Instructions: undefined;
+export type UserType = {
+  id: number;
+  name: string;
+  email: string;
+  image: any;
+  contactNo: string;
+  bio: string;
 };
 
-export type TabParamList = {
+export type RootStackParamList = {
   Home: undefined;
-  Links: undefined;
-  Types: undefined;
-  More: undefined;
+  UserDetails: { user: UserType };
 };
+
 
 export type RootStackNavigation = NativeStackNavigationProp<RootStackParamList>;
-export type TabNavigation = NativeStackNavigationProp<TabParamList>;
+

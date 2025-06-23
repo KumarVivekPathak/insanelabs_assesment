@@ -1,72 +1,57 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Header from '../components/Header';
-import { RootStackParamList, TabParamList } from './types';
-type IconName = keyof typeof Ionicons.glyphMap;
+import { RootStackParamList } from './types';
 
 import Home from '../screens/Home';
-import PreIncidentLinks from '../screens/PreIncidentLinks';
-import IndicateTypes from '../screens/IndicateTypes';
-import Instructions from '../screens/Instructions';
+import UserDetails from '../screens/UserDetails';
+import { TouchableOpacity, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
-const Tab = createBottomTabNavigator();
 
-const TabNavigator = () => {
+const HeaderLeft = () => {
+  const navigation = useNavigation();
   return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        header: () => <Header />,
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName: IconName = 'home';
-
-          if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'Links') {
-            iconName = focused ? 'link' : 'link-outline';
-          } else if (route.name === 'Types') {
-            iconName = focused ? 'list' : 'list-outline';
-          } else if (route.name === 'More') {
-            iconName = focused ? 'menu' : 'menu-outline';
-          }
-
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-        tabBarActiveTintColor: '#007AFF',
-        tabBarInactiveTintColor: 'gray',
-      })}
+    <TouchableOpacity 
+      onPress={() => navigation.goBack()}
+      style={{
+        padding: 10,
+        marginRight: 8
+      }}
     >
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Links" component={PreIncidentLinks} />
-      <Tab.Screen name="Types" component={IndicateTypes} />
-      <Tab.Screen name="More" component={IndicateTypes} />
-
-    </Tab.Navigator>
+      <Ionicons name="arrow-back" size={24} color="white" />
+    </TouchableOpacity>
   );
-};
+}
 
 const StackNavigator = () => {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        header: () => <Header />,
-      }}
-    >
+    <Stack.Navigator>
       <Stack.Screen 
-        name="Tabs" 
-        component={TabNavigator}
-        options={{ headerShown: false }}
+        name="Home" 
+        component={Home}
+        options={{
+          headerShown: false
+        }}
       />
       <Stack.Screen 
-        name="Instructions" 
-        component={Instructions}
+        name="UserDetails" 
+        component={UserDetails}
         options={{
-          headerShown: true,
-          title: 'Instructions'
+          headerTitle: 'User Details',
+          headerLeft: () => <HeaderLeft />,
+          headerBackVisible: false,
+          headerStyle: {
+            backgroundColor: '#007AFF',
+          },
+          headerTitleStyle: {
+            color: 'white',
+            fontWeight: 'bold',
+          },
+          headerTintColor: 'white',
         }}
       />
     </Stack.Navigator>

@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet, Platform, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, Platform, StatusBar, TouchableOpacity } from 'react-native';
 import { SafeAreaInsetsContext, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Header = () => {
-  const insets = useSafeAreaInsets();
+ 
   
   return (
     <SafeAreaView style={[styles.header]}>
